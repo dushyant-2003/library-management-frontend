@@ -1,0 +1,30 @@
+.profile-section {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  .profile-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .profile-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+  }
+  .label {
+    font-weight: bold;
+  }
+  .value {
+    color: #555;
+  }

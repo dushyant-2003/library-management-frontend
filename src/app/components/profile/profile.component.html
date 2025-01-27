@@ -1,0 +1,58 @@
+<app-header />
+<div class="p-5">
+
+
+<div class="profile-section p-4">
+    <h2 class="profile-title">Profile Details</h2>
+    <div class="profile-details">
+      <div class="profile-item">
+        <span class="label">Name:</span>
+        <span class="value">{{ user?.name }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Username:</span>
+        <span class="value">{{ user?.userName }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Email:</span>
+        <span class="value">{{ user?.email }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Contact Number:</span>
+        <span class="value">{{ user?.contactNumber }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Date of Birth:</span>
+        <span class="value">{{ user?.dateOfBirth }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Gender:</span>
+        <span class="value">{{ user?.gender }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Address:</span>
+        <span class="value">{{ user?.address }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Department:</span>
+        <span class="value">{{ user?.department }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Designation:</span>
+        <span class="value">{{ user?.designation }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Role:</span>
+        <span class="value">{{ user?.role }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Book Issue Limit:</span>
+        <span class="value">{{ user?.bookIssueLimit }}</span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Fine:</span>
+        <span class="value">{{ user?.fine | currency:'INR' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,267 @@
+/* Global Styles */
+
+
+/* Container Margins */
+.p-mt-3 {
+    margin-top: 1.5rem;
+  }
+  
+  .p-mt-5 {
+    margin-top: 3rem;
+  }
+  
+  /* Text Alignment */
+  .p-text-center {
+    text-align: center;
+    
+  }
+  
+  /* Button Styles */
+  .p-button {
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .p-button-outlined {
+    border: 2px solid #007ad9;
+    background: transparent;
+    color: #007ad9;
+  }
+  
+  .p-button-outlined:hover {
+    background-color: #007ad9;
+    color: white;
+  }
+  
+  .p-button-danger {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+  }
+  
+  .p-button-danger:hover {
+    background-color: #b71c1c;
+  }
+  
+  .p-button-success {
+    display: inline-block;
+      font-family: 'Poppins', sans-serif;
+      padding: 1rem 1.5rem; /* Adjusted padding for better clickability */
+      font-size: 1rem; /* Standard font size for readability */
+      font-weight: 800; /* Slightly bold font */
+      color: #ffffff; /* Dark text for contrast */
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      border-radius: 12px; /* Rounded corners */
+      background-color: #45913f;
+      // background: linear-gradient(90deg, rgba(240, 239, 255, 1) 0%, rgba(217, 217, 255, 1) 54%, rgba(167, 194, 255, 1) 100%);
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+  }
+  
+  .p-button-success:hover {
+    background: #67bc61;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+      transform: translateY(-2px); /* Lift effect on hover */
+  }
+  
+  .p-button-secondary {
+    background-color: #6c757d;
+    border: none;
+    color: white;
+  }
+  
+  .p-button-secondary:hover {
+    background-color:  #c3c3c3;
+  }
+  
+  .p-button-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Table Styles */
+  .p-datatable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.95rem;
+  }
+  
+  .p-datatable thead {
+    background-color: #003c8f;
+    color: white;
+  }
+  
+  .p-datatable thead th {
+    padding: 1rem;
+    text-align: left;
+    font-size: 1rem;
+  }
+  
+  .p-datatable tbody tr {
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .p-datatable tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .p-datatable tbody td {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Form Dialog */
+  p-dialog .form-container {
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  p-dialog .form-heading {
+    font-size: 1.5rem;
+    color: #007ad9;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  p-dialog .form-field {
+    margin-bottom: 1rem;
+  }
+  
+  p-dialog .form-field label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+  
+  p-dialog .form-field input,
+  p-dialog .form-field select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 0.95rem;
+  }
+  
+  p-dialog .form-field input:focus,
+  p-dialog .form-field select:focus {
+    border-color: #007ad9;
+    outline: none;
+  }
+  
+  p-dialog .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  /* Flex Utilities */
+  .p-d-flex {
+    display: flex;
+  }
+  
+  .p-jc-center {
+    justify-content: center;
+  }
+  
+  .p-ai-center {
+    align-items: center;
+  }
+  
+  /* Shadow for Cards and Tables */
+  .p-shadow-3 {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Hover State for Add User Button */
+  .p-button-success:hover {
+    background-color: #67bc61;
+  }
+  
+  /* Typography */
+  h2, .form-heading {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  /* Additional Adjustments */
+  input::placeholder {
+    font-style: italic;
+    color: #adb5bd;
+  }
+  
+  select {
+    appearance: none;
+    padding-right: 1.5rem; /* For dropdown arrow */
+    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNNC42NiA2LjMzYTIuNjYgMi42NiAwIDAxMy3tMCA0LjY2TDhhLjUuNiAwIDAxLjY2TDkgNi4zNEEyLjY2IDIuNjYgMCAwMSA3LjM0IDVsLTItLjEzem0tLjcgMS4wNmEuNTEuNSAwIDAxLS42Ni4wNWwtLjYtMS41YS41LjUgMCAwMS4zNi0uOWwuNiAxLjQ3em0uNzQgNC41NGEuNS41IDAgMDEtLjMuOWwtLjYtMS41YS41LjUgMCAwMS42Ni0uMDVsLjYgMS40N3ptLTUuNzItLjVBLjUuNSAwIDAxNC4zMSAxMmEuNS41IDAgMDEtLjM2LjkuNi41IDAgMDEtLjY2LS4wN2EuNS41IDAgMDEuMzYtLjl6bTAgMi42YS41LjUgMCAwMS0uMy45bC0uNi0xLjVhLjUuNSAwIDAxLjY2LS4wNS4xMy4xMyAwIDAxLjE2LjE3bC42IDEuNDZ6IiBmaWxsPSIjNmM3NjdiIi8+PC9zdmc+")
+      no-repeat right 0.5rem center;
+    background-size: 1rem;
+  }
+  .button-container {
+    display: flex;
+    justify-content: space-between; /* Align buttons on opposite sides */
+    align-items: center; /* Align items vertically in the center */
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .search-icon {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .search-icon svg {
+    cursor: pointer;
+    transition: fill 0.3s ease;
+  }
+  
+  .search-icon svg:hover {
+    fill: #003c8f;
+  }
+  
+  .search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent;
+    padding: 4px 8px;
+  }
+  
+  .search-input::placeholder {
+    color: #757575;
+  }
+  
+  .search-container:hover {
+    border-color: #003c8f;
+  }
+  

@@ -1,0 +1,478 @@
+<app-header />
+
+<div [ngClass]="{ 'opacity-10': isFormActive, 'opacity-100': isFormDisabled }">
+  <div class="p-mt-3 pr-8 pl-8 button-container">
+    <button pButton (click)="showBookDetails()" class="p-button-success">
+      Show Book Details
+    </button>
+    <button
+      pButton
+      type="button"
+      class="p-button-success"
+      (click)="showAddUserModal()"
+      *ngIf = "role === 'ROLE_ADMIN'"
+    >
+      Add Book
+    </button>
+    <button
+    pButton
+    type="button"
+    class="p-button-success"
+    (click)="showIssuedBookDetails()"
+    *ngIf = "role === 'ROLE_ISSUER'"
+  >
+    Show Issued Book Details
+  </button>
+  </div>
+
+ 
+
+
+  <div *ngIf="books.length > 0" class="p-mt-3 pt-3 pl-8 pr-8">
+    
+    <div class="search-container p-2 mb-2 mr-0" >
+        <span class="search-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#757575"
+          >
+            <path
+              d="M796-120 535-380q-29 23-65 36.5T400-330q-117 0-198.5-81.5T120-610q0-117 81.5-198.5T400-890q117 0 198.5 81.5T680-610q0 53-18 99t-52 85l261 260-75 76ZM400-390q92 0 156-64t64-156q0-92-64-156t-156-64q-92 0-156 64t-64 156q0 92 64 156t156 64Z"
+            />
+          </svg>
+        </span>
+        <input
+          id="searchBook"
+          type="text"
+          pInputText
+          [(ngModel)]="searchBookText"
+          [ngModelOptions]="{ standalone: true }"
+          (input)="filterBooks()"
+          placeholder="Search by Name"
+          class="search-input"
+        />
+      </div>
+      
+    <div class="p-grid p-dir-col">
+      <div class="p-col">
+        
+      
+        <table class="p-datatable p-shadow-3">
+
+            
+          <thead class="p-8" style="background-color: #003c8f">
+            <tr class="p-2">
+              <th>Name</th>
+              <th>Author</th>
+              <th>Publication</th>
+              <th>Edition</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th *ngIf = "role === 'ROLE_ADMIN'">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let book of filteredBooks"
+              (click)="showBookDetail(book.bookId)"
+            >
+            @if(book.status != 'Lost') {
+
+            
+              <td>{{ book.name }}</td>
+              <td>{{ book.author }}</td>
+              <td>{{ book.publication }}</td>
+              <td>{{ book.edition }}</td>
+              <td>{{ book.price | currency : "INR" }}</td>
+              <td *ngIf="book.status === 'Issued'" class="bg-status-issued">
+                {{ book.status }}
+              </td>
+              <td
+                *ngIf="book.status === 'Available'"
+                class="bg-status-available"
+              >
+                {{ book.status }}
+              </td>
+              
+
+              @if(role === 'ROLE_ADMIN') {
+
+            
+             
+              <td>
+<!-- 
+                    <p-toast />
+                    <p-confirmdialog />
+                    
+                   <p-button (click)="deleteBook(book.bookId)" label="Delete" severity="danger" [outlined]="true" /> -->
+        
+                <button
+                  class="p-button p-button-danger p-button-sm btn btn-secondary"
+                  [disabled]="book.status === 'Issued'"
+                  
+                  (click)="deleteBook(book.bookId)"
+                  label="Delete"
+                  severity="danger"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-trash-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
+                    />
+                  </svg>
+                 {{role}}
+                </button>
+                <button
+                  type="button"
+                  *ngIf="book.status === 'Available'"
+                  class="btn btn-outline-success btn-sm button-style"
+                  (click)="showIssueFormModal(book.bookId)"
+                >
+                  Issue
+                </button>
+                <button
+                  type="button"
+                  *ngIf="book.status === 'Issued'"
+                  class="btn-sm button-style btn btn-outline-danger"
+                  (click)="showReturnFormModal(); showBookDetail(book.bookId)"
+                >
+                  Return
+                </button>
+              </td>
+            }
+            
+        }
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '50vw', maxHeight: '92vh' }"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+>
+
+  <div class="form-container">
+    
+    <i class="pi pi-times" style="margin-left: 98%;" (click)="onCloseDialog()"></i>
+  
+    <h2 class="form-heading text-center" style="color: #001f3f">Add Book</h2>
+    <form [formGroup]="addBookForm" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <label for="name">Book Name</label>
+        <input id="name" type="text" pInputText formControlName="name" />
+      </div>
+
+      <div class="form-field">
+        <label for="author">Author</label>
+        <input id="author" type="text" pInputText formControlName="author" />
+      </div>
+
+      <div class="form-field">
+        <label for="publication">Publication</label>
+        <input
+          id="publication"
+          type="text"
+          pInputText
+          formControlName="publication"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="edition">Edition</label>
+        <input id="edition" type="text" pInputText formControlName="edition" />
+      </div>
+
+      <div class="form-field">
+        <label for="price">Price</label>
+        <input id="price" type="number" pInputText formControlName="price" />
+      </div>
+
+      <div class="form-actions">
+        <button
+          pButton
+          type="button"
+          label="Cancel"
+          class="p-button-secondary p-ml-2"
+          (click)="
+            displayModal = false; isFormActive = false; isFormDisabled = true
+          "
+        ></button>
+        <button
+          pButton
+          type="submit"
+          label="Add"
+          class="p-button-success p-ml-2"
+          [disabled]="addBookForm.invalid"
+        ></button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<!-- return book pop up -->
+
+<p-dialog
+  [(visible)]="displayReturnForm"
+  [style]="{ width: '50vw', maxHeight: '90vh' }"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+>
+
+
+  <div class="form-container">
+    <i class="pi pi-times" style="margin-left: 98%;" (click)="onCloseReturnDialog()"></i>
+    <h2 class="form-heading text-center" style="color: #001f3f">Return Book</h2>
+    <form>
+      <div class="form-field">
+        <label for="name">User Name</label>
+        <input
+          id="name"
+          type="text"
+          pInputText
+          [value]="bookDetail?.userName"
+          disabled
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="name">Name</label>
+        <input
+          id="name"
+          type="text"
+          pInputText
+          [value]="bookDetail?.issuerName"
+          disabled
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="issueDate">Issue Date</label>
+        <input
+          id="issueDate"
+          type="text"
+          pInputText
+          [value]="bookDetail?.issueDate | date : 'fullDate'"
+          disabled
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="issueDate">Deadline</label>
+        <input
+          id="issueDate"
+          type="text"
+          pInputText
+          [value]="bookDetail?.deadline | date : 'fullDate'"
+          disabled
+        />
+      </div>
+
+      <!-- <div class="form-field">
+        <label for="fine">Fine</label>
+        <input
+          id="fine"
+          type="number"
+          pInputText
+          [value]="bookDetail?.fine"
+          disabled
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="bookStatus">Is the book lost?</label>
+        
+        
+        <input 
+          type="radio" 
+          id="yes" 
+          name="bookStatus" 
+          [(ngModel)]="isBookLost" 
+          [value]="true"
+          class="toggle-radio"
+        />
+        <label for="yes" class="toggle-label">Yes</label>
+    
+       
+        <input 
+          type="radio" 
+          id="no" 
+          name="bookStatus" 
+          [(ngModel)]="isBookLost" 
+          [value]="false"
+          class="toggle-radio"
+        />
+        <label for="no" class="toggle-label">No</label>
+      </div> -->
+      <div class="form-field">
+        <label for="bookStatusToggle" class="form-label">Is the book lost?</label>
+        <div class="toggle-switch">
+          <!-- Label for "No" -->
+          <span class="toggle-label-left" [class.active]="!isBookLost">No</span>
+      
+          <!-- Toggle Input -->
+          <input
+            type="checkbox"
+            id="bookStatusToggle"
+            (change)="toggleValueChange()"
+            class="toggle-input"
+          />
+      
+          <!-- Custom toggle slider -->
+          <label for="bookStatusToggle" class="toggle-slider"></label>
+      
+          <!-- Label for "Yes" -->
+          <span class="toggle-label-right" [class.active]="isBookLost">Yes</span>
+        </div>
+      </div>
+      
+    
+      <div class="form-actions">
+        <button pButton type="button" label="Cancel" class="p-button-secondary p-ml-2" (click)="onCloseReturnDialog()"></button>
+        <button pButton type="button" (click)="returnBook()" label="Return" class="p-button-danger p-ml-2"></button>
+      </div>
+
+    </form>
+  </div>
+</p-dialog>
+
+<!-- issue book form -->
+<p-dialog
+[(visible)]="displayIssueForm"
+[style]="{ width: '50vw', maxHeight: '80vh' }"
+[modal]="true"
+[closable]="false"
+[draggable]="false"
+>
+
+
+<div class="form-container">
+    <i class="pi pi-times" style="margin-left: 98%;" (click)="onCloseIssueDialog()"></i>
+    <h2 class="form-heading text-center" style="color: #001f3f">Issue Book</h2>
+    <form>
+      <div class="form-field">
+        <label for="searchUser">Search User</label>
+        <input
+          id="searchUser"
+          type="text"
+          pInputText
+          [(ngModel)]="searchText"
+          [ngModelOptions]="{ standalone: true }" 
+          (input)="filterUsers()"
+          placeholder="Search by Name"
+        />
+      </div>
+  
+      <div class="table-container" style="max-height: 300px; overflow-y: auto;">
+        <table
+          class="p-datatable p-shadow-3"
+          style="width: 100%; border-collapse: collapse;"
+        >
+          <thead style="background-color: #003c8f; color: white;">
+            <tr>
+              <th style="padding: 8px; text-align: left;">Username</th>
+              <th style="padding: 8px; text-align: left;">Name</th>
+              <th style="padding: 8px; text-align: left;">Book Issue Limit</th>
+              <th style="padding: 8px; text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let user of filteredUsers"
+              style="border-bottom: 1px solid #ddd;"
+            >
+              <td style="padding: 8px;">{{ user.userName }}</td>
+              <td style="padding: 8px;">{{ user.name }}</td>
+              <td style="padding: 8px;">{{ user.bookIssueLimit }}</td>
+              <td style="padding: 8px; text-align: center;">
+                <button
+                  type="button"
+                  *ngIf="user.bookIssueLimit > 0"
+                  class="btn btn-outline-success btn-sm button-style"
+                  (click)="issueBook(user.userId);"
+                >
+                  Issue
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <div class="form-actions" style="margin-top: 16px; text-align: center;">
+        <button
+          pButton
+          type="button"
+          label="Cancel"
+          class="p-button-secondary"
+          (click)="onCloseIssueDialog()"
+        ></button>
+        
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+
+<!-- issued books details> -->
+<div *ngIf="issuedBooks.length > 0" class="p-mt-3 pt-3 pl-8 pr-8">
+    
+  
+    
+  <div class="p-grid p-dir-col">
+    <div class="p-col">
+      
+    
+      <table class="p-datatable p-shadow-3">
+
+          
+        <thead class="p-8" style="background-color: #003c8f">
+          <tr class="p-2">
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Issue Date</th>
+            <th>Deadline</th>
+            <th>Fine</th>
+          
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let book of issuedBooks"
+          >
+
+
+          
+            <td>{{ book.bookName }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.price | currency: 'INR' }}</td>
+            <td>{{ book.issueDate | date: 'EEEE MMMM dd yyyy' }}</td>
+            <td>{{ book.deadline | date: 'EEEE MMMM dd yyyy' }}</td>
+            <td> {{book.fine | currency: 'INR'}}  </td>
+
+         
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,188 @@
+<app-header/>
+
+<div [ngClass]="{ 'opacity-10': isFormActive, 'opacity-100': isFormDisabled }">
+  <div class="p-mt-3 pr-5 pl-5 button-container">
+    <button pButton (click)="showUserDetails()" class="p-button-success" *ngIf = "role === 'ROLE_ADMIN'">
+      Show User to send notification
+    </button>
+    <button pButton  class="p-button-success" *ngIf = "role === 'ROLE_ISSUER'" (click) = "readNotification()">
+      Read Notifications
+    </button>
+   
+  </div>
+ 
+  <div *ngIf="users.length > 0 " class="p-mt-3 p-5">
+    <div class="search-container p-2 mb-2 mr-0">
+      <span class="search-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#757575"
+        >
+          <path
+            d="M796-120 535-380q-29 23-65 36.5T400-330q-117 0-198.5-81.5T120-610q0-117 81.5-198.5T400-890q117 0 198.5 81.5T680-610q0 53-18 99t-52 85l261 260-75 76ZM400-390q92 0 156-64t64-156q0-92-64-156t-156-64q-92 0-156 64t-64 156q0 92 64 156t156 64Z"
+          />
+        </svg>
+      </span>
+      <input
+        id="searchUser"
+        type="text"
+        pInputText
+        [(ngModel)]="searchUserText"
+        [ngModelOptions]="{ standalone: true }"
+        (input)="filterUsers()"
+        placeholder="Search by Name"
+        class="search-input"
+      />
+    </div>
+    <div class="p-grid p-dir-col">
+      <div class="p-col">
+        <table class="p-datatable p-shadow-3 p-5">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Gender</th>
+              <th>Department</th>
+              <th>Designation</th>
+              <th>Contact Number</th>
+              <th>Email</th>
+              <th>Book Issue Limit</th>
+              <th>Fine</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredUsers">
+              <td>{{ user.name }}</td>
+              <td>{{ user.userName }}</td>
+              <td>{{ user.role }}</td>
+              <td>{{ user.gender }}</td>
+              <td>{{ user.department }}</td>
+              <td>{{ user.designation }}</td>
+              <td>{{ user.contactNumber }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.bookIssueLimit }}</td>
+              <td>{{ user.fine }}</td>
+              <td>
+                <p-confirmdialog />
+                <button
+                  (click)="showSendNotificationModal(user.userName)"
+                  class="p-button p-button-success p-button-sm"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#FFFFFF"
+                  >
+                    <path
+                      d="M480-500Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80Zm240-360v-120H600v-80h120v-120h80v120h120v80H800v120h-80ZM160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q14 4 27.5 8.5T593-772q-15 14-27 30.5T545-706q-15-7-31.5-10.5T480-720q-66 0-113 47t-47 113v280h320v-112q18 11 38 18t42 11v83h80v80H160Z"
+                    />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="users.length === 0 && role === 'ROLE_ADMIN'" class="p-mt-3 p-text-center">
+    <p>No users available to display.</p>
+  </div>
+</div>
+
+
+<!-- Send notification dialog -->
+
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '50vw', maxHeight: '80vh' }"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+>
+  <ng-template pTemplate="header"> </ng-template>
+
+  <div class="form-container">
+    <i
+      class="pi pi-times"
+      style="margin-left: 98%"
+      (click)="onCloseDialog()"
+    ></i>
+
+    <h2 class="form-heading text-center" style="color: #001f3f">
+      Send notification
+    </h2>
+    <form [formGroup]="addNotificationForm" (ngSubmit)="sendNotification()">
+      <div class="form-field">
+        <label for="title">Title</label>
+        <input id="title" type="text" pInputText formControlName="title" />
+      </div>
+
+      <div class="form-field">
+        <label for="message">Message</label>
+        <input
+          id="message"
+          type="text"
+          pInputText
+          formControlName="message"
+        />
+      </div>
+
+      <div class="form-actions">
+        <button
+          pButton
+          type="button"
+          label="Cancel"
+          class="p-button-dark "
+          (click)="onCloseDialog()"
+        ></button>
+        <div>
+          <p-button
+            pButton
+            type="submit"
+            label="Send"
+            class="p-button-success"
+            [disabled]="addNotificationForm.invalid"
+          ></p-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+
+<!-- read notification for user -->
+
+<div *ngIf="notifications.length > 0 " class="p-mt-3 p-5">
+  <div class="p-grid p-dir-col">
+    <div class="p-col">
+      <table class="p-datatable p-shadow-3 p-5">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let notification of notifications; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ notification.date | date: 'EEEE MMMM dd yyyy'  }}</td>
+            <td>{{ notification.title }}</td>
+            <td>{{ notification.message }}</td>
+           
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

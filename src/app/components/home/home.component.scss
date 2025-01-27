@@ -1,0 +1,63 @@
+/* home.component.css */
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: rgba( 255, 255, 255, 0.05 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 16px );
+-webkit-backdrop-filter: blur( 16px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+  }
+  
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    text-align: center;
+  }
+  
+  .d-flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .card-btn {
+    width: 100%;
+  }
+  .btn-primary {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    padding: 1rem 1.5rem; /* Adjusted padding for better clickability */
+    font-size: 1rem; /* Standard font size for readability */
+    font-weight: 800; /* Slightly bold font */
+    color: #212529; /* Dark text for contrast */
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 12px; /* Rounded corners */
+    background-color: #dac0f8;
+    // background: linear-gradient(90deg, rgba(240, 239, 255, 1) 0%, rgba(217, 217, 255, 1) 54%, rgba(167, 194, 255, 1) 100%);
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(90deg, rgba(217, 217, 255, 1) 0%, rgba(167, 194, 255, 1) 54%, rgba(140, 180, 255, 1) 100%);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0); /* Reset position on click */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Reset shadow on click */
+  }
+  
+  .p-3 {
+    padding: 1rem; /* Padding utility */
+  }
+  

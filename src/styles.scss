@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../node_modules/primeflex/primeflex.css';
+@import '../node_modules/primeflex/themes/primeone-light.css';
+
+// body {
+//     background: rgb(240,239,255);
+//     background: linear-gradient(90deg, rgba(240,239,255,1) 0%, rgba(217,217,255,1) 54%, rgba(167,194,255,1) 100%);
+//   }
+  body {
+    font-family: 'Poppins', sans-serif; /* Modern and clean font */
+    background: linear-gradient(90deg, rgba(240,239,255,1) 0%, rgba(217,217,255,1) 54%, rgba(167,194,255,1) 100%);/* Light neutral background */
+    color: #212529; /* Dark text for good contrast */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    // font-size: 80px;
+  }
