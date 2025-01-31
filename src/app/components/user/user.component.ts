@@ -15,13 +15,14 @@ import { HeaderComponent } from '../header/header.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import { ToastrService } from 'ngx-toastr';
+import { Paginator, PaginatorModule, PaginatorState } from 'primeng/paginator';
 @Component({
   selector: 'app-user',
   imports: [ ReactiveFormsModule, NgIf,NgFor,
    DialogModule ,FormsModule,
    ButtonModule, InputTextModule,
-    DropdownModule, HeaderComponent, NgClass, ConfirmDialogModule],
+    DropdownModule, HeaderComponent, NgClass, ConfirmDialogModule, Paginator, PaginatorModule],
 
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
@@ -35,7 +36,11 @@ export class UserComponent {
   isFormActive: boolean = false
   isFormDisabled: boolean = true
   searchUserText: string = ''
-  constructor(private userService:  UserService,private fb: FormBuilder,private messageService: MessageService,private confirmationService: ConfirmationService) {
+  page: number = 1;
+  size: number = 1;
+  totalElements: number = 10;
+  totalPages: number = 5;
+  constructor(private toastr: ToastrService, private userService:  UserService,private fb: FormBuilder,private messageService: MessageService,private confirmationService: ConfirmationService) {
     this.addUserForm = this.fb.group({
       name: ['', [Validators.required]],
       userName: ['', [Validators.required]],
@@ -67,16 +72,22 @@ export class UserComponent {
 
       this.userService.addUser(userData).subscribe(
         (response) => {
-          console.log('User added successfully', response.message);
+          this.toastr.success(userData.message, userData.status, {
+            timeOut: 2000,
+            progressBar: true,
+           
+          });
           userData.bookIssueLimit = 3
           userData.fine = 0
           this.filteredUsers = [...this.filteredUsers, userData]
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User Added Successfully' });
+         
           this.addUserForm.reset();
         },
         (error) => {
-          console.error('Error adding user', error);
-          alert('Error adding user. Please try again.');
+          this.toastr.error(error.error.message, "Failure", {
+            timeOut: 2000,
+            progressBar: true,
+          });
         }
       );
     } else {
@@ -85,68 +96,50 @@ export class UserComponent {
   }
   
 
+
   showUserDetails(): void {
     // Simulate fetching multiple user data
-    this.userService.getAllUsers().subscribe({
+    this.userService.getAllUsersPagniated(this.page,this.size).subscribe({
       next: (userData: UserResponse) => {
+        this.toastr.success(userData.message, userData.status, {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
         this.users = userData.data;
         this.filteredUsers = [... this.users]
       },
       error: (error: HttpErrorResponse) => {
-       // this.toastService.showError(error.error.message);
+        this.toastr.error(error.error.message, "Failure", {
+          timeOut: 2000,
+          progressBar: true,
+        });
       },
     });
   }
 
   deleteUser(userId: string): void {
     
-    if (confirm('Are you sure you want to delete this user?')) {
+    
       
       this.userService.deleteUser(userId).subscribe({
-        next: () => {
-          alert('User deleted successfully');
-          this.filteredUsers = this.filteredUsers.filter(user => user.userId !== userId); // Remove user from the list
+        next: (response) => {
+          this.toastr.success(response.message, response.status, {
+            timeOut: 2000,
+            progressBar: true,
+           
+          });
         },
         error: (error) => {
-          console.error('Error deleting user:', error);
-          alert('Failed to delete the user');
+          this.toastr.error(error.error.message, "Failure", {
+            timeOut: 2000,
+            progressBar: true,
+          });
         }
       });
 
+    
 
-    }
-//   this.confirmationService.confirm({
-   
-//     message: 'Do you want to delete this record?',
-//     header: 'Danger Zone',
-//     icon: 'pi pi-info-circle',
-//     rejectLabel: 'Cancel',
-//     rejectButtonProps: {
-//         label: 'Cancel',
-//         severity: 'secondary',
-//         outlined: true,
-//     },
-//     acceptButtonProps: {
-//         label: 'Delete',
-//         severity: 'danger',
-//     },
-
-//     accept: () => {
-  // this.userService.deleteUser(userId).subscribe({
-  //   next: () => {
-  //     alert('User deleted successfully');
-  //     this.filteredUsers = this.filteredUsers.filter(user => user.userId !== userId); // Remove user from the list
-  //   },
-  //   error: (error) => {
-  //     console.error('Error deleting user:', error);
-  //     alert('Failed to delete the user');
-  //   }
-  // });
-       
-//     },
-//     reject: () => {
-//     }
-// });
 
   }
 
@@ -156,4 +149,9 @@ filterUsers() {
   );
 }
 
+onPageChange(event: PaginatorState): void {
+  console.log(event);
+  this.page = event.page! + 1;
+  this.showUserDetails();
+}
 }

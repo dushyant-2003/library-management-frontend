@@ -1,0 +1,55 @@
+<app-header />
+
+
+<div>
+    <div class="p-mt-3 pr-8 pt-3 pl-8 button-container">
+      <button pButton class="p-button-success" (click)="seeFines()">
+        See fines
+      </button>
+      </div>
+</div>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '50vw', maxHeight: '60vh' }"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+>
+  <ng-template pTemplate="header"> </ng-template>
+
+  <div class="form-container">
+    <i
+      class="pi pi-times"
+      style="margin-left: 98%"
+      (click)="onCloseDialog()"
+    ></i>
+
+    <h2 class="form-heading text-center" style="color: #001f3f">
+      Pay Fine
+    </h2>
+    <form>
+
+        <div class="form-actions">
+            <p-button
+              pButton
+              type="button"
+              label="Cancel"
+              class="p-button-secondary"
+              (click)="onCloseDialog()"
+            ></p-button>
+            <div>
+              <p-button
+                pButton
+                type="submit"
+                label="Pay"
+                class="p-button-success"
+              
+              ></p-button>
+            </div>
+          </div>
+        
+    
+    </form>
+  </div>
+</p-dialog>

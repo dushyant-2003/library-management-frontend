@@ -24,13 +24,21 @@ export class UserService  {
             `${BASE_URL}/users`
           );
       }
-
+      
+      getAllUsersPagniated(
+        page: number, size: number
+      ): Observable<UserResponse> {
+        return this.httpClient
+          .get<UserResponse>(
+            `${BASE_URL}/users?limit=${size}&pageNumber=${page}`
+          );
+      }
       deleteUser(userId: string): Observable<{
-        code: number;
+        status: string;
         message: string;
       }> {
         return this.httpClient.delete<{
-          code: number;
+          status: string;
           message: string;
         }>(`${BASE_URL}/users/${userId}`);
       }

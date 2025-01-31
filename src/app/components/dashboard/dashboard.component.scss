@@ -1,0 +1,188 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.greeting {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-box {
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  width: 45%;
+  text-align: center;
+}
+
+.large-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.overdue {
+  color: red;
+  font-weight: bold;
+}
+
+.on-time {
+  color: rgb(15, 150, 15);
+  font-weight: bold;
+}
+/* Global Styles */
+
+
+/* Container Margins */
+.p-mt-3 {
+  margin-top: 1.5rem;
+}
+
+.p-mt-5 {
+  margin-top: 3rem;
+}
+
+/* Text Alignment */
+.p-text-center {
+  text-align: center;
+  
+}
+
+/* Button Styles */
+
+
+
+
+/* Table Styles */
+.p-datatable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.95rem;
+}
+
+.p-datatable thead {
+  background-color: #003c8f;
+  color: white;
+}
+
+.p-datatable thead th {
+  padding: 1rem;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.p-datatable tbody tr {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.p-datatable tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.p-datatable tbody td {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* Form Dialog */
+p-dialog .form-container {
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+p-dialog .form-heading {
+  font-size: 1.5rem;
+  color: #007ad9;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+p-dialog .form-field {
+  margin-bottom: 1rem;
+}
+
+p-dialog .form-field label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+p-dialog .form-field input,
+p-dialog .form-field select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 0.95rem;
+}
+
+p-dialog .form-field input:focus,
+p-dialog .form-field select:focus {
+  border-color: #007ad9;
+  outline: none;
+}
+
+p-dialog .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Flex Utilities */
+.p-d-flex {
+  display: flex;
+}
+
+.p-jc-center {
+  justify-content: center;
+}
+
+.p-ai-center {
+  align-items: center;
+}
+
+/* Shadow for Cards and Tables */
+
+
+.no-books-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 10vh; /* Set height to half of the viewport */
+  text-align: center;
+}
+
+.no-books-message {
+  font-size: 1.5rem; /* Larger text */
+  font-weight: bold;
+  color: #ff4757; /* Attractive red shade */
+  background: rgba(255, 239, 239, 0.8); /* Light red background */
+  padding: 10px 20px;
+  border-radius: 8px; /* Smooth corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+}

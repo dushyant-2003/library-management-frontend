@@ -22,9 +22,10 @@ export type IssuedBookDetail =  {
     bookName: string;
     author: string;
     price: number;
-    issueDate: string; // Use `Date` if you're handling dates as objects
-    deadline: string;  // Use `Date` if you're handling dates as objects
+    issueDate: string; 
+    deadline: string; 
     fine: number;
+    status: string
   }
   
   export type IssuedBookDetailResponse =  {

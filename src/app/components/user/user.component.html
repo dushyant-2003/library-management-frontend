@@ -1,16 +1,21 @@
 <app-header />
 
-
 <div [ngClass]="{ 'opacity-10': isFormActive, 'opacity-100': isFormDisabled }">
+  <div class="p-mt-3 pr-5 pl-5 button-container">
+    <button pButton (click)="showUserDetails()" class="p-button-success">
+      Show User Details
+    </button>
+    <button
+      pButton
+      type="button"
+      label="Add User"
+      class="p-button-success"
+      (click)="showAddUserModal()"
+    ></button>
+  </div>
 
-<div class="p-mt-3 pr-5 pl-5 button-container">
-  <button pButton (click)="showUserDetails()" class="p-button-success">Show User Details</button>
-  <button pButton type="button" label="Add User" class="p-button-success" (click)="showAddUserModal()"></button>
-</div>
-
-  
   <div *ngIf="users.length > 0" class="p-mt-3 p-5">
-    <div class="search-container p-2 mb-2 mr-0" >
+    <div class="search-container p-2 mb-2 mr-0">
       <span class="search-icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -67,68 +72,90 @@
               <td>{{ user.fine }}</td>
               <td>
                 <p-confirmdialog />
-                <button (click)="deleteUser(user.userId) " class="p-button p-button-danger p-button-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-                  </svg></button>
+                <button
+                  (click)="deleteUser(user.userId)"
+                  class="p-button p-button-danger p-button-sm"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-trash-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
+                    />
+                  </svg>
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
+        <div class="card flex justify-center p-3 m-2">
+          <p-paginator
+            [first]="(page) * size"
+            [rows]="size"
+            [totalRecords]="totalElements"
+            (onPageChange)="onPageChange($event)"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+            styleClass="custom-paginator"
+          ></p-paginator>
+          
+        </div>
+        
       </div>
     </div>
   </div>
-  
+
   <div *ngIf="users.length === 0" class="p-mt-3 p-text-center">
     <p>No users available to display.</p>
   </div>
-  
-  </div>
-
+</div>
 
 <!-- Add user form -->
-  <p-dialog 
-  [(visible)]="displayModal" 
-  [style]="{ width: '40vw', maxHeight: '80vh' }" 
-  [modal]="true" 
-  [closable]="false" 
-  [draggable]="false">
-  <ng-template pTemplate="header">
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '40vw', maxHeight: '80vh' }"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+>
+  <ng-template pTemplate="header"> </ng-template>
 
-    
-  </ng-template>
-  
+  <div class="form-container">
+    <i
+      class="pi pi-times"
+      style="margin-left: 98%"
+      (click)="onCloseDialog()"
+    ></i>
 
-    <div class="form-container">
-      
-      <i class="pi pi-times" style="margin-left: 98%;" (click)="onCloseDialog()"></i>
-  
-
-     
-      <h2 class="form-heading text-center" style="color: #001f3f">Add User</h2>
+    <h2 class="form-heading text-center" style="color: #001f3f">Add User</h2>
     <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
-      
       <div class="flex justify-content-between">
-
-
-        <div class="form-field" >
+        <div class="form-field">
           <label for="name">Name</label>
           <input id="name" type="text" pInputText formControlName="name" />
         </div>
-  
+
         <div class="form-field">
           <label for="userName">User Name</label>
-          <input id="userName" type="text" pInputText formControlName="userName" />
+          <input
+            id="userName"
+            type="text"
+            pInputText
+            formControlName="userName"
+          />
         </div>
       </div>
 
       <div class="flex justify-content-between">
-
         <div class="form-field">
           <label for="role">Role</label>
           <input id="role" type="text" pInputText formControlName="role" />
         </div>
-  
+
         <div class="form-field">
           <label for="gender">Gender</label>
           <select id="gender" pDropdown formControlName="gender">
@@ -136,58 +163,95 @@
             <option value="FEMALE">Female</option>
           </select>
         </div>
-        
-  
+
         <div class="form-field">
           <label for="dateOfBirth">Date of Birth</label>
-          <input id="dateOfBirth" type="date" pInputText formControlName="dateOfBirth" />
+          <input
+            id="dateOfBirth"
+            type="date"
+            pInputText
+            formControlName="dateOfBirth"
+          />
         </div>
       </div>
 
       <div class="flex justify-content-between">
         <div class="form-field">
           <label for="department">Department</label>
-          <input id="department" type="text" pInputText formControlName="department" />
+          <input
+            id="department"
+            type="text"
+            pInputText
+            formControlName="department"
+          />
         </div>
-  
+
         <div class="form-field">
           <label for="designation">Designation</label>
-          <input id="designation" type="text" pInputText formControlName="designation" />
+          <input
+            id="designation"
+            type="text"
+            pInputText
+            formControlName="designation"
+          />
         </div>
-      
+
         <div class="form-field">
           <label for="contactNumber">Contact Number</label>
-          <input id="contactNumber" type="text" pInputText formControlName="contactNumber" />
+          <input
+            id="contactNumber"
+            type="text"
+            pInputText
+            formControlName="contactNumber"
+          />
         </div>
       </div>
-  <div class="flex justify-content-between">
+      <div class="flex justify-content-between">
         <div class="form-field">
           <label for="email">Email</label>
           <input id="email" type="email" pInputText formControlName="email" />
         </div>
-  
+
         <div class="form-field">
           <label for="address">Address</label>
-          <input id="address" type="text" pInputText formControlName="address" />
+          <input
+            id="address"
+            type="text"
+            pInputText
+            formControlName="address"
+          />
         </div>
       </div>
-        <div class="form-field">
-          <label for="password">Password</label>
-          <input id="password" type="password" pInputText formControlName="password" />
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          pInputText
+          formControlName="password"
+        />
+      </div>
+
+      <div class="form-actions">
+        <button
+          pButton
+          type="button"
+          label="Cancel"
+          class="p-button-secondary"
+          (click)="
+            displayModal = false; isFormActive = false; isFormDisabled = true
+          "
+        ></button>
+        <div>
+          <p-button
+            pButton
+            type="submit"
+            label="Submit"
+            class="p-button-success p-ml-2"
+            [disabled]="addUserForm.invalid"
+          ></p-button>
         </div>
-  
-        <div class="form-actions">
-          <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="displayModal = false; isFormActive=false; isFormDisabled = true"></button>
-          <div> 
-            
-            <p-button pButton type="submit" label="Submit" class="p-button-success p-ml-2" [disabled]="addUserForm.invalid"></p-button>
-        
-          </div>
-          
-        </div>
-      
-    
+      </div>
     </form>
   </div>
-  </p-dialog>
-  
+</p-dialog>

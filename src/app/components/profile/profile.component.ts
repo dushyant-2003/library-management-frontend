@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth-service/auth.service';
 import { HeaderComponent } from '../header/header.component';
 import { jwtDecode } from 'jwt-decode';
 import { UserService } from '../../services/user.service';

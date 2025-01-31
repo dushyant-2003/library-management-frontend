@@ -16,8 +16,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NotificationService } from '../../services/notification.service';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth-service/auth.service';
 import { Notification } from '../../models/notification.model';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class NotificationComponent {
   isFormDisabled: boolean = true
   role: string = ''
   loggedInUserName: string = ''
-  constructor(private userService: UserService, private notificationService: NotificationService, private fb: FormBuilder, private authServie: AuthService) {
+  constructor(private toastr: ToastrService, private userService: UserService, private notificationService: NotificationService, private fb: FormBuilder, private authServie: AuthService) {
 
 
     this.addNotificationForm = this.fb.group({
@@ -77,11 +78,19 @@ export class NotificationComponent {
     // Simulate fetching multiple user data
     this.userService.getAllUsers().subscribe({
       next: (userData: UserResponse) => {
+        this.toastr.success(userData.message, userData.status, {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
         this.users = userData.data;
         this.filteredUsers = [... this.users]
       },
       error: (error: HttpErrorResponse) => {
-       // this.toastService.showError(error.error.message);
+        this.toastr.error(error.error.message, "Failure", {
+          timeOut: 2000,
+          progressBar: true,
+        });
       },
     });
   }
@@ -95,13 +104,20 @@ export class NotificationComponent {
     notificationData.userName = this.userName;
     
     this.notificationService.sendNotification(notificationData).subscribe(
-      (resposne) => {
+      (response) => {
     
-        console.log(resposne.message)
+        this.toastr.success(response.message, response.status, {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
         this.onCloseDialog()
       },
       (error) => {
-
+        this.toastr.error(error.error.message, "Failure", {
+          timeOut: 2000,
+          progressBar: true,
+        });
       }
     )
  
@@ -110,9 +126,17 @@ export class NotificationComponent {
     this.notificationService.readNotification(this.loggedInUserName).subscribe(
       (response) => {
         this.notifications = response.data
+        this.toastr.success(response.message, response.status, {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
       },
       (error) => {
-
+        this.toastr.error(error.error.message, "Failure", {
+          timeOut: 2000,
+          progressBar: true,
+        });
       }
     )
   }

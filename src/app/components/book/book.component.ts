@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe, NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, resolveForwardRef } from '@angular/core';
 import {
   Book,
   BookResponse,
@@ -27,7 +27,8 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-book',
   imports: [
@@ -69,7 +70,7 @@ export class BookComponent {
     private confirmationService: ConfirmationService, private messageService: MessageService,
     private bookService: BookService,
     private fb: FormBuilder,
-    private userService: UserService,private authService: AuthService
+    private userService: UserService,private authService: AuthService, private toastr: ToastrService
   ) {
     this.addBookForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -101,11 +102,12 @@ export class BookComponent {
     // Simulate fetching multiple user data
     this.userService.getAllUsers().subscribe({
       next: (userData: UserResponse) => {
+        
         this.users = userData.data;
         this.filteredUsers = [...this.users];
       },
       error: (error: HttpErrorResponse) => {
-        // this.toastService.showError(error.error.message);
+        
       },
     });
   }
@@ -113,11 +115,20 @@ export class BookComponent {
     // Simulate fetching multiple user data
     this.bookService.getAllBooks().subscribe({
       next: (bookData: BookResponse) => {
+        this.toastr.success(bookData.message, bookData.status, {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
         this.books = bookData.data;
         this.filteredBooks = [...this.books];
       },
       error: (error: HttpErrorResponse) => {
-        // this.toastService.showError(error.error.message);
+        this.toastr.error(error.error.message, "Failure", {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
       },
     });
   }
@@ -126,60 +137,43 @@ export class BookComponent {
     this.bookService.getBookDetail(bookId).subscribe({
       next: (bookData: IssuedBookDetailResponse) => {
         this.bookDetail = bookData.data[0];
-
-        console.log(this.bookDetail);
+        this.toastr.success(bookData.message, bookData.status, {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
       },
-      error: (error) => {},
+      error: (error) => {
+        this.toastr.error(error.error.message, "Failure", {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
+      },
     });
   }
   deleteBook(bookId: string): void {
     if (confirm('Are you sure you want to delete this user?')) {
-      this.bookService.deleteUser(bookId).subscribe({
-        next: () => {
-          alert('User deleted successfully');
+      this.bookService.deleteBook(bookId).subscribe({
+        next: (response) => {
+          this.toastr.success(response.message, response.status, {
+            timeOut: 2000,
+            progressBar: true,
+           
+          });
           this.filteredBooks = this.filteredBooks.filter((book) => book.bookId !== bookId); // Remove user from the list
         },
         error: (error) => {
-          console.error('Error deleting user:', error);
-          alert('Failed to delete the user');
+          this.toastr.error(error.error.message, "Failure", {
+            timeOut: 2000,
+            progressBar: true,
+           
+          });
         },
       });
     }
 
-  //   this.confirmationService.confirm({
-  //     target: event.target as EventTarget,
-  //     message: 'Do you want to delete this record?',
-     
-  //     header: 'Danger Zone',
-  //     icon: 'pi pi-info-circle',
-  //     rejectLabel: 'Cancel',
-  //     rejectButtonProps: {
-  //         label: 'Cancel',
-  //         severity: 'secondary',
-  //         outlined: true,
-  //     },
-  //     acceptButtonProps: {
-  //         label: 'Delete',
-  //         severity: 'danger',
-  //     },
-
-  //     accept: () => {
-  //       this.bookService.deleteUser(bookId).subscribe({
-  //         next: () => {
-  //           alert('User deleted successfully');
-  //           this.filteredBooks = this.filteredBooks.filter((book) => book.bookId !== bookId); // Remove user from the list
-  //         },
-  //         error: (error) => {
-  //           console.error('Error deleting user:', error);
-  //           alert('Failed to delete the user');
-  //         },
-  //       });
-  //     },
-  //     reject: () => {
-          
-  //     },
-  // });
-
+  
   }
 
   returnBook(): void {
@@ -190,7 +184,12 @@ export class BookComponent {
       this.bookService
         .returnBook({ bookId, userId, bookLostStatus })
         .subscribe({
-          next: () => {
+          next: (response) => {
+            this.toastr.success(response.message, response.status, {
+              timeOut: 2000,
+              progressBar: true,
+             
+            });
             this.filteredBooks = this.filteredBooks.map((book) => {
               if (book.bookId === this.bookDetail?.bookId) {
                 return { ...book, status: 'Available' }; // Create a new object with updated status
@@ -198,7 +197,13 @@ export class BookComponent {
               return book; // Return the original object if no match
             });
           },
-          error: (error) => {},
+          error: (error) => {
+            this.toastr.error(error.error.message, "Failure", {
+              timeOut: 2000,
+              progressBar: true,
+             
+            });
+          },
         });
     }
     this.onCloseReturnDialog();
@@ -213,12 +218,20 @@ export class BookComponent {
         (response) => {
          bookData.status = 'Available'
           this.filteredBooks = [...this.filteredBooks, bookData]
-          alert('Book added successfully!');
+          this.toastr.success(response.message, response.status, {
+            timeOut: 2000,
+            progressBar: true,
+           
+          });
           this.addBookForm.reset();
+
         },
         (error) => {
-          console.error('Error adding user', error);
-          alert('Error adding user. Please try again.');
+          this.toastr.error(error.error.message, "Failure", {
+            timeOut: 2000,
+            progressBar: true,
+           
+          });
         }
       );
     } else {
@@ -278,7 +291,12 @@ export class BookComponent {
   issueBook(userId: string): void {
     let bookId = this.issueBookId;
     this.bookService.issueBook({ bookId, userId }).subscribe({
-      next: () => {
+      next: (response) => {
+        this.toastr.success(response.message, response.status, {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
         this.filteredBooks = this.filteredBooks.map((book) => {
           if (book.bookId === bookId) {
             return { ...book, status: 'Issued' };
@@ -286,7 +304,13 @@ export class BookComponent {
           return book;
         });
       },
-      error: (error) => {},
+      error: (error) => {
+        this.toastr.error(error.error.message, "Failure", {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
+      },
     });
     this.onCloseIssueDialog();
   }
@@ -294,14 +318,37 @@ export class BookComponent {
     this.isBookLost = !this.isBookLost;
     console.log(this.isBookLost)
   }
+
+
   showIssuedBookDetails() {
     this.bookService.getIssuedBookDetails(this.loggedInUserName).subscribe({
       next: (response) => {
+        if(response.data.length === 0){
+          
+          this.toastr.info("No book issued", response.status, {
+            timeOut: 2000,
+            progressBar: true,
+           
+          });
+        }
+        else {
+          this.toastr.success(response.message, response.status, {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
+        }
+        
+        this
         this.issuedBooks = response.data
         this.books = []
       },
-      error: () => {
-
+      error: (error) => {
+        this.toastr.error(error.error.message, "Failure", {
+          timeOut: 2000,
+          progressBar: true,
+         
+        });
       }
     })
   }

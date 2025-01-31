@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth-service/auth.service';
 import { Role } from '../../models/role.model';
 import { NgIf } from '@angular/common';
 @Component({
@@ -55,7 +55,7 @@ export class HeaderComponent {
       this.router.navigate(['/admin/home'])
     } 
     else {
-      this.router.navigate(['/home'])
+      this.router.navigate(['/dashboard'])
     }
   }
   navigateToProfile() {
@@ -65,5 +65,8 @@ export class HeaderComponent {
     else {  
       this.router.navigate(['/profile'])
     }
+  }
+  navigateToFine() {
+    this.router.navigate(['/fine'])
   }
 }

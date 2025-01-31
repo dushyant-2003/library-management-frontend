@@ -1,17 +1,26 @@
-<app-header/>
+<app-header />
 
 <div [ngClass]="{ 'opacity-10': isFormActive, 'opacity-100': isFormDisabled }">
   <div class="p-mt-3 pr-5 pl-5 button-container">
-    <button pButton (click)="showUserDetails()" class="p-button-success" *ngIf = "role === 'ROLE_ADMIN'">
+    <button
+      pButton
+      (click)="showUserDetails()"
+      class="p-button-success"
+      *ngIf="role === 'ROLE_ADMIN'"
+    >
       Show User to send notification
     </button>
-    <button pButton  class="p-button-success" *ngIf = "role === 'ROLE_ISSUER'" (click) = "readNotification()">
+    <button
+      pButton
+      class="p-button-success"
+      *ngIf="role === 'ROLE_ISSUER'"
+      (click)="readNotification()"
+    >
       Read Notifications
     </button>
-   
   </div>
- 
-  <div *ngIf="users.length > 0 " class="p-mt-3 p-5">
+
+  <div *ngIf="users.length > 0" class="p-mt-3 p-5">
     <div class="search-container p-2 mb-2 mr-0">
       <span class="search-icon">
         <svg
@@ -93,11 +102,13 @@
     </div>
   </div>
 
-  <div *ngIf="users.length === 0 && role === 'ROLE_ADMIN'" class="p-mt-3 p-text-center">
+  <div
+    *ngIf="users.length === 0 && role === 'ROLE_ADMIN'"
+    class="p-mt-3 p-text-center"
+  >
     <p>No users available to display.</p>
   </div>
 </div>
-
 
 <!-- Send notification dialog -->
 
@@ -128,12 +139,7 @@
 
       <div class="form-field">
         <label for="message">Message</label>
-        <input
-          id="message"
-          type="text"
-          pInputText
-          formControlName="message"
-        />
+        <input id="message" type="text" pInputText formControlName="message" />
       </div>
 
       <div class="form-actions">
@@ -141,7 +147,7 @@
           pButton
           type="button"
           label="Cancel"
-          class="p-button-dark "
+          class="p-button-dark"
           (click)="onCloseDialog()"
         ></button>
         <div>
@@ -158,10 +164,9 @@
   </div>
 </p-dialog>
 
-
 <!-- read notification for user -->
 
-<div *ngIf="notifications.length > 0 " class="p-mt-3 p-5">
+<div *ngIf="notifications.length > 0" class="p-mt-3 p-5">
   <div class="p-grid p-dir-col">
     <div class="p-col">
       <table class="p-datatable p-shadow-3 p-5">
@@ -176,10 +181,9 @@
         <tbody>
           <tr *ngFor="let notification of notifications; let i = index">
             <td>{{ i + 1 }}</td>
-            <td>{{ notification.date | date: 'EEEE MMMM dd yyyy'  }}</td>
+            <td>{{ notification.date | date : "EEEE MMMM dd yyyy" }}</td>
             <td>{{ notification.title }}</td>
             <td>{{ notification.message }}</td>
-           
           </tr>
         </tbody>
       </table>

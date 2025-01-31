@@ -7,15 +7,12 @@ import { UserComponent } from './components/user/user.component';
 import { BookComponent } from './components/book/book.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { FineComponent } from './components/fine/fine.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
-    },
-    {
-      path: 'home',
-      component: HomeComponent,
-      canActivate: [LoginGuard]
     },
     {
       path: 'book',
@@ -31,6 +28,15 @@ export const routes: Routes = [
       path: 'profile',
       component: ProfileComponent,
       canActivate: [LoginGuard]
+    },
+    {
+      path: 'dashboard',
+      component: DashboardComponent,
+      canActivate: [LoginGuard]
+    },
+    {
+      path: 'fine',
+      component: FineComponent
     },
     {
         path: 'admin',

@@ -23,12 +23,13 @@ export class BookService  {
             `${BASE_URL}/books`
           );
       }
-    deleteUser(bookId: string): Observable<{
-        code: number;
+    deleteBook(bookId: string): Observable<{
+        status: string;
         message: string;
+        
       }> {
         return this.httpClient.delete<{
-          code: number;
+          status: string;
           message: string;
         }>(`${BASE_URL}/books/${bookId}`);
       }

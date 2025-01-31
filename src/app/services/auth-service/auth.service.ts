@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '../models/auth.model'; 
-import { BASE_URL } from '../shared/constants/constants';
+import { LoginResponse } from '../../models/auth.model'; 
+import { BASE_URL } from '../../shared/constants/constants';
 import { signal } from '@angular/core';
-import { Role } from '../models/role.model';
+import { Role } from '../../models/role.model';
 import { jwtDecode } from 'jwt-decode';
-import { User } from '../models/user.model';
-@Injectable({
-  providedIn: 'root'
+import { User } from '../../models/user.model';
 
+
+@Injectable({
+  providedIn:'root'
 })
+
+
 export class AuthService {
 
   user$ = signal<User | null>(null);

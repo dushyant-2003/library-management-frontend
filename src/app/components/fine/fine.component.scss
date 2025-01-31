@@ -1,0 +1,112 @@
+
+  
+//   .p-button-success {
+//     display: inline-block;
+//     font-family: 'Poppins', sans-serif;
+//     padding: 1rem 1.5rem; /* Adjusted padding for better clickability */
+//     font-size: 1rem; /* Standard font size for readability */
+//     font-weight: 800; /* Slightly bold font */
+//     color: #ffffff; /* Dark text for contrast */
+//     text-align: center;
+//     text-decoration: none;
+   
+//     border: 1px solid rgba(0, 0, 0, 0.1);
+//     border-radius: 12px; /* Rounded corners */
+//     background-color:	#45913f;
+//     // background: linear-gradient(90deg, rgba(240, 239, 255, 1) 0%, rgba(217, 217, 255, 1) 54%, rgba(167, 194, 255, 1) 100%);
+//     cursor: pointer;
+//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+//     transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+//   }
+  
+//   .p-button-success:hover {
+//     opacity: 80%;
+//     // background-color: #138f75;
+//     color: #ffffff;
+//     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+//     transform: translateY(-2px); /* Lift effect on hover */
+//   }
+  
+.p-mt-3 {
+    margin-top: 1.5rem;
+  }
+  
+  .p-mt-5 {
+    margin-top: 3rem;
+  }
+  
+  /* Text Alignment */
+  .p-text-center {
+    text-align: center;
+    
+  }
+  
+  /* Button Styles */
+  .p-button {
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .p-button-outlined {
+    border: 2px solid #007ad9;
+    background: transparent;
+    color: #007ad9;
+  }
+  
+  .p-button-outlined:hover {
+    background-color: #007ad9;
+    color: white;
+  }
+  
+  .p-button-danger {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+  }
+  
+  .p-button-danger:hover {
+    background-color: #b71c1c;
+  }
+  
+  .p-button-success {
+    display: inline-block;
+      font-family: 'Poppins', sans-serif;
+      padding: 1rem 1.5rem; /* Adjusted padding for better clickability */
+      font-size: 1rem; /* Standard font size for readability */
+      font-weight: 800; /* Slightly bold font */
+      color: #ffffff; /* Dark text for contrast */
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      border-radius: 12px; /* Rounded corners */
+      background-color: #45913f;
+      // background: linear-gradient(90deg, rgba(240, 239, 255, 1) 0%, rgba(217, 217, 255, 1) 54%, rgba(167, 194, 255, 1) 100%);
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+  }
+  
+  .p-button-success:hover {
+    background: #67bc61;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+      transform: translateY(-2px); /* Lift effect on hover */
+  }
+  
+  .p-button-secondary {
+    background-color: #6c757d;
+    border: none;
+    color: white;
+  }
+  
+  .p-button-secondary:hover {
+    background-color:  #c3c3c3;
+  }
+  
+  .p-button-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
